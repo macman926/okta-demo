@@ -1,0 +1,6 @@
+first_name,last_name,email,role,manager_email,start_date
+Ada,Lovelace,ada.lovelace@example.com,software-engineer,mgr1@example.com,2026-05-04
+Grace,Hopper,grace.hopper@example.com,researcher,mgr2@example.com,2026-05-04
+Alan,Turing,alan.turing@example.com,software-engineer,mgr1@example.com,2026-05-11
+Katherine,Johnson,katherine.johnson@example.com,trader,mgr3@example.com,2026-05-11
+Edsger,Dijkstra,edsger.dijkstra@example.com,contractor,mgr1@example.com,2026-05-04

@@ -1,0 +1,68 @@
+# Declarative role -> downstream access.
+#
+# Editing this file is how you grant or revoke default access for a role
+# at an organization-wide level. The orchestrator consumes it at runtime;
+# no code change required to add/rename a role.
+#
+# Schema:
+#   roles:
+#     <role-name>:
+#       okta_groups: [list of Okta group names]
+#       slack_channels: [list of Slack channel names, no leading #]
+#       google_ou: "/Google/Workspace/OU/Path"
+
+roles:
+  software-engineer:
+    okta_groups:
+      - all-staff
+      - engineering
+      - vpn-users
+      - github-org
+    slack_channels:
+      - general
+      - engineering
+      - random
+    google_ou: /Staff/Engineering
+
+  trader:
+    okta_groups:
+      - all-staff
+      - trading-floor
+      - market-data
+      - vpn-users
+    slack_channels:
+      - general
+      - trading
+    google_ou: /Staff/Trading
+
+  researcher:
+    okta_groups:
+      - all-staff
+      - research
+      - market-data
+      - vpn-users
+    slack_channels:
+      - general
+      - research
+      - papers
+    google_ou: /Staff/Research
+
+  operations:
+    okta_groups:
+      - all-staff
+      - operations
+      - vpn-users
+    slack_channels:
+      - general
+      - ops
+    google_ou: /Staff/Operations
+
+  contractor:
+    # Intentionally narrow. Contractors get added to individual projects
+    # via a separate, auditable flow, not this default grant.
+    okta_groups:
+      - all-staff
+      - vpn-users
+    slack_channels:
+      - general
+    google_ou: /Staff/Contractors

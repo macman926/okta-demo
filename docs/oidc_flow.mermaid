@@ -1,0 +1,22 @@
+%% OIDC Authorization Code flow as implemented in src/oidc_app.py
+sequenceDiagram
+    autonumber
+    participant U as User (Browser)
+    participant F as Flask app (src/oidc_app.py)
+    participant O as Okta (Authorization Server)
+
+    U->>F: GET /login
+    F->>F: generate nonce, store in session
+    F-->>U: 302 to Okta /authorize<br/>?client_id&redirect_uri&scope=openid+profile+email&nonce&state
+    U->>O: GET /authorize
+    O-->>U: login UI (with MFA)
+    U->>O: submit credentials
+    O-->>U: 302 to /authorization-code/callback?code=...&state=...
+    U->>F: GET /authorization-code/callback?code=...
+    F->>O: POST /token<br/>grant_type=authorization_code<br/>code, client_id, client_secret, redirect_uri
+    O-->>F: id_token + access_token
+    F->>O: GET /.well-known/jwks.json (Authlib caches)
+    O-->>F: JWKS
+    F->>F: verify id_token signature + iss/aud/exp/nonce
+    F->>F: set session['user']
+    F-->>U: 302 to /

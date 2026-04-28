@@ -1,0 +1,36 @@
+%% High-level component diagram and OIDC sequence diagram.
+%% Renderable at https://mermaid.live or with any tool that speaks mermaid.
+%% To export an SVG:  npx -p @mermaid-js/mermaid-cli mmdc -i architecture.mermaid -o architecture.svg
+
+%% ---------- 1. Component diagram ----------
+flowchart LR
+    subgraph Input
+      A[HRIS CSV<br/>new_hires.csv]
+      B[HRIS CSV<br/>offboards.csv]
+    end
+
+    A --> C
+    B --> C
+
+    subgraph App[hrt-okta-demo]
+      C[Click CLI<br/>cli.py]
+      D[Lifecycle<br/>lifecycle.py]
+      E[Role Map<br/>YAML]
+      F[Okta Client<br/>okta_client.py]
+      G[Provider interface]
+      H[SlackProvider<br/>mock]
+      I[GoogleWorkspaceProvider<br/>mock]
+      J[Structured JSON logs]
+    end
+
+    C --> D
+    D --> E
+    D --> F
+    D --> G
+    G --> H
+    G --> I
+    D --> J
+
+    F -->|HTTPS<br/>SSWS token| K[(Okta Tenant)]
+    H -.mock.-> L[(Slack)]
+    I -.mock.-> M[(Google Workspace)]
